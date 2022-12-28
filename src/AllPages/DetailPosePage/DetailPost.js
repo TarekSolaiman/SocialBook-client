@@ -1,11 +1,88 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React from "react";
-import { Link } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+import React, { useState, useEffect } from "react";
+import { useForm } from "react-hook-form";
+import { useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 
-const PostView = ({ post }) => {
-  const { userPhoto, userName, postPhoto, postText, like, _id } = post;
+const DetailPost = () => {
+  const { id } = useParams();
+  const { register, handleSubmit, reset } = useForm();
+  const {
+    data: onePost = [],
+    isLoading,
+    refetch,
+  } = useQuery({
+    queryKey: "myPayments",
+    queryFn: async () => {
+      const res = await fetch(`http://localhost:5000/onepost/${id}`);
+      const data = await res.json();
+      return data;
+    },
+  });
+  const { userPhoto, userName, postPhoto, postText, like, _id } = onePost;
+
+  // like post
+  const likeHandle = (id) => {
+    const likeNo = parseInt(like) + 1;
+    console.log(likeNo);
+    fetch(`http://localhost:5000/onepost/${id}?likeNo=${likeNo}`, {
+      method: "PATCH",
+      headers: {
+        "content-type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        refetch();
+        toast.success("Successful like", {
+          autoClose: 500,
+        });
+      });
+  };
+  console.log(onePost, like);
+
+  // read all comment
+  // const [comment, setComment] = useState([]);
+  // const [loadeComent, setLoadeComent] = useState(true);
+  // const comentRead = () => {
+  //   fetch(`http://localhost:5000/makeComment/${_id}`)
+  //     .then((res) => res.json())
+  //     .then((data) => {
+  //       setComment(data);
+  //       toast.success("Successful like", {
+  //         autoClose: 500,
+  //       });
+  //     });
+  // };
+  // console.log(comment);
+  // make comment
+  const comnetHandle = (data) => {
+    const commentData = {
+      comment: data.comment,
+      postId: _id,
+      userPhoto,
+      userName,
+    };
+    fetch(`http://localhost:5000/makeComment`, {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(commentData),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        toast.success("Successful like", {
+          autoClose: 500,
+        });
+      });
+  };
+
   return (
-    <div className="flex flex-col p-6 my-10 space-y-6 overflow-hidden rounded-lg shadow-md dark:bg-gray-900 dark:text-gray-100">
+    <div className="flex flex-col p-6 mx-10 my-10 space-y-6 overflow-hidden rounded-lg shadow-md dark:bg-gray-900 dark:text-gray-100">
       <div className="flex space-x-4">
         <img
           alt=""
@@ -33,9 +110,19 @@ const PostView = ({ post }) => {
       </div>
       <div className="flex flex-wrap justify-between">
         <div className="space-x-2">
-          <Link to={`/details/${_id}`}>
-            <button className="btn btn-sm btn-success">Details</button>
-          </Link>
+          <form
+            onSubmit={handleSubmit(comnetHandle)}
+            className="flex items-center"
+          >
+            <textarea
+              {...register("comment")}
+              className="textarea textarea-success h-10 mr-3"
+              placeholder="Comment Now"
+            ></textarea>
+            <button type="submit" className="btn btn-success">
+              Submit
+            </button>
+          </form>
         </div>
         <div className="flex space-x-2 text-sm dark:text-gray-400">
           <button type="button" className="flex items-center p-1 space-x-1.5">
@@ -50,7 +137,11 @@ const PostView = ({ post }) => {
             </svg>
             <span>30</span>
           </button>
-          <button type="button" className="flex items-center p-1 space-x-1.5">
+          <button
+            type="button"
+            onClick={() => likeHandle(_id)}
+            className="flex items-center p-1 space-x-1.5"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 512 512"
@@ -68,4 +159,4 @@ const PostView = ({ post }) => {
   );
 };
 
-export default PostView;
+export default DetailPost;

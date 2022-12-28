@@ -65,6 +65,7 @@ const SigninPage = () => {
             name="name"
             id="name"
             placeholder="Name"
+            required
             className="input input-bordered input-success w-full"
           />
         </div>
@@ -79,6 +80,7 @@ const SigninPage = () => {
             name="university"
             id="university"
             placeholder="University"
+            required
             className="input input-bordered input-success w-full"
           />
         </div>
@@ -93,6 +95,7 @@ const SigninPage = () => {
             name="photo"
             id="photo"
             placeholder="Name"
+            required
             className="file-input file-input-bordered file-input-success w-full"
           />
         </div>
@@ -107,6 +110,7 @@ const SigninPage = () => {
             name="email"
             id="email"
             placeholder="Email"
+            required
             className="input input-bordered input-success w-full"
           />
         </div>
@@ -121,6 +125,7 @@ const SigninPage = () => {
             name="password"
             id="password"
             placeholder="Password"
+            required
             className="input input-bordered input-success w-full"
           />
           <div className="flex justify-end text-xs dark:text-gray-400">

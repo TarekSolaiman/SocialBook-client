@@ -9,7 +9,7 @@ const LoginPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
-  const { login, googlLogin } = useContext(AuthContext);
+  const { login } = useContext(AuthContext);
   const { register, handleSubmit, reset } = useForm();
   const loginForm = (data) => {
     const email = data.email;
@@ -46,6 +46,7 @@ const LoginPage = () => {
             name="email"
             id="email"
             placeholder="Email"
+            required
             className="input input-bordered input-success w-full"
           />
         </div>
@@ -59,6 +60,7 @@ const LoginPage = () => {
             name="password"
             id="password"
             placeholder="Password"
+            required
             className="input input-bordered input-success w-full"
           />
           <div className="flex justify-end text-xs dark:text-gray-400">

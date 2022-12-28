@@ -8,11 +8,11 @@ const Main = () => {
   return (
     <div>
       <Navber />
-      <div class="flex flex-row">
-        <section class="fixed h-full">
+      <div className="flex flex-row">
+        <section className="fixed h-full">
           <SiteBar />
         </section>
-        <section class="w-full mb-20 lg:ml-60">
+        <section className="w-full mb-20 lg:ml-60">
           <Outlet />
         </section>
       </div>
