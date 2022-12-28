@@ -1,39 +1,55 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React from "react";
+import React, { useContext } from "react";
+import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
+import { AuthContext } from "../../context/AuthProvider";
 
 const LoginPage = () => {
-  const loginForm = (e) => {
-    e.preventDefault();
-    const form = e.target;
-    const email = form.email.value;
-    const password = form.password.value;
-    console.log(email, password);
-    form.reset();
+  const { login, googlLogin } = useContext(AuthContext);
+  const { register, handleSubmit, reset } = useForm();
+  const loginForm = (data) => {
+    const email = data.email;
+    const password = data.password;
+    login(email, password)
+      .then((data) => {
+        console.log(data);
+        toast.success("Successful login", {
+          autoClose: 500,
+        });
+        reset();
+      })
+      .catch((e) =>
+        toast.error(e.message, {
+          autoClose: 500,
+        })
+      );
   };
   return (
     <div className="w-full mx-auto my-20 max-w-md p-8 space-y-3 rounded-xl dark:bg-gray-900 dark:text-gray-100">
       <h1 className="text-2xl font-bold text-center">Login</h1>
       <form
-        onSubmit={loginForm}
+        onSubmit={handleSubmit(loginForm)}
         className="space-y-6 ng-untouched ng-pristine ng-valid"
       >
         <div className="space-y-1 text-sm">
-          <label for="email" className="block dark:text-gray-400">
+          <label htmlFor="email" className="block dark:text-gray-400">
             Username
           </label>
           <input
-            type="text"
-            email="email"
+            {...register("email")}
+            type="email"
+            name="email"
             id="email"
             placeholder="Email"
             className="input input-bordered input-success w-full"
           />
         </div>
         <div className="space-y-1 text-sm">
-          <label for="password" className="block dark:text-gray-400">
+          <label htmlFor="password" className="block dark:text-gray-400">
             Password
           </label>
           <input
+            {...register("password")}
             type="password"
             name="password"
             id="password"

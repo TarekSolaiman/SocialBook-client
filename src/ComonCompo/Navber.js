@@ -20,10 +20,20 @@ const Navber = () => {
           <a>Signin</a>
         </li>
       </Link>
+      <Link to="/signin">
+        <li>
+          <a>About</a>
+        </li>
+      </Link>
+      <Link to="/signin" className="block lg:hidden">
+        <li>
+          <a>Logout</a>
+        </li>
+      </Link>
     </>
   );
   return (
-    <div className="navbar bg-base-100">
+    <div className="navbar bg-gray-900 sticky top-0">
       <div className="navbar-start">
         <div className="hidden lg:block">
           <ul className="menu menu-horizontal px-1">{navLink}</ul>

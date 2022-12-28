@@ -2,20 +2,23 @@ import React from "react";
 import { Outlet } from "react-router-dom";
 import Footer from "../ComonCompo/Footer";
 import Navber from "../ComonCompo/Navber";
+import SiteBar from "../ComonCompo/SiteBar";
 
 const Main = () => {
   return (
     <div>
       <Navber />
       <div class="flex flex-row">
-        <section class="basis-1/4">
-          <h2>section 1</h2>
+        <section class="fixed h-full">
+          <SiteBar />
         </section>
-        <section class="w-full">
+        <section class="w-full mb-20 lg:ml-60">
           <Outlet />
         </section>
       </div>
-      <Footer />
+      <section>
+        <Footer />
+      </section>
     </div>
   );
 };
