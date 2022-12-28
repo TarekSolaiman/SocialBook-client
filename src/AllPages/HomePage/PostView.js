@@ -8,7 +8,7 @@ const PostView = () => {
         <img
           alt=""
           src="https://source.unsplash.com/100x100/?portrait"
-          className="object-cover w-auto h-12 rounded-full shadow dark:bg-gray-500"
+          className="object-cover w-12 h-12 rounded-full shadow dark:bg-gray-500"
         />
         <div className="flex flex-col space-y-1">
           <a
@@ -25,7 +25,7 @@ const PostView = () => {
         <img
           src="https://source.unsplash.com/random/100x100/?5"
           alt=""
-          className="object-cover w-full mb-4 h-60 sm:h-96 dark:bg-gray-500"
+          className="object-cover w-full rounded-lg mb-4 h-60 sm:h-96 dark:bg-gray-500"
         />
         <h2 className="mb-1 text-xl font-semibold">
           Nam cu platonem posidonium sanctus debitis te

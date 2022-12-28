@@ -1,10 +1,14 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useContext } from "react";
 import { useForm } from "react-hook-form";
+import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { AuthContext } from "../../context/AuthProvider";
 
 const LoginPage = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
   const { login, googlLogin } = useContext(AuthContext);
   const { register, handleSubmit, reset } = useForm();
   const loginForm = (data) => {
@@ -17,6 +21,7 @@ const LoginPage = () => {
           autoClose: 500,
         });
         reset();
+        navigate(from, { replace: true });
       })
       .catch((e) =>
         toast.error(e.message, {

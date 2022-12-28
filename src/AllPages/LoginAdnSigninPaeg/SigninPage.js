@@ -1,19 +1,23 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useContext } from "react";
 import { useForm } from "react-hook-form";
+import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { AuthContext } from "../../context/AuthProvider";
 
 const SigninPage = () => {
   const { signUp, googlLogin, nameUpdate } = useContext(AuthContext);
   const { register, handleSubmit, reset } = useForm();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
   const SigninForm = (data) => {
-    const imghostKey = process.env.REACT_APP_appId;
+    const imghostKey = process.env.REACT_APP_imagekey;
     const email = data.email;
     const name = data.name;
     const photo = data.photo;
     const password = data.password;
-    console.log(data, photo[0], imghostKey);
+    console.log(data, photo[0]);
 
     const formData = new FormData();
     formData.append("image", photo[0]);
@@ -26,22 +30,23 @@ const SigninPage = () => {
       .then((imgdata) => {
         if (imgdata.success) {
           console.log(imgdata.data.url);
+          signUp(email, password)
+            .then((data) => {
+              nameUpdate(name, imgdata.data.url);
+              toast.success("Successful login", {
+                autoClose: 500,
+              });
+              console.log(data.user);
+              reset();
+              navigate(from, { replace: true });
+            })
+            .catch((e) =>
+              toast.error(e.message, {
+                autoClose: 500,
+              })
+            );
         }
       });
-    // signUp(email, password)
-    //   .then((data) => {
-    //     console.log(data.user);
-    //     nameUpdate(name, photo);
-    //     toast.success("Successful login", {
-    //       autoClose: 500,
-    //     });
-    //     reset();
-    //   })
-    //   .catch((e) =>
-    //     toast.error(e.message, {
-    //       autoClose: 500,
-    //     })
-    //   );
   };
   return (
     <div className="w-full mx-auto my-20 max-w-md p-8 space-y-3 rounded-xl dark:bg-gray-900 dark:text-gray-100">
@@ -79,7 +84,7 @@ const SigninPage = () => {
         </div>
 
         <div className="space-y-1 text-sm">
-          <label htmlFor="name" className="block dark:text-gray-400">
+          <label htmlFor="photo" className="block dark:text-gray-400">
             Your Photo
           </label>
           <input
