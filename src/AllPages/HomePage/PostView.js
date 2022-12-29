@@ -8,7 +8,9 @@ const PostView = ({ post }) => {
 
   // Read all comment
   useEffect(() => {
-    fetch(`https://social-book-server-five.vercel.app/allComment/${_id}`)
+    fetch(
+      `https://social-book-server-tareksolaiman.vercel.app/allComment/${_id}`
+    )
       .then((res) => res.json())
       .then((data) => setCountComment(data));
   }, [_id]);

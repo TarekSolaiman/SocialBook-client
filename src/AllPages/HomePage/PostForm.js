@@ -32,13 +32,16 @@ const PostForm = ({ refetch }) => {
               postText: data.postText,
               like: 0,
             };
-            fetch("https://social-book-server-five.vercel.app/makePost", {
-              method: "POST",
-              headers: {
-                "content-type": "application/json",
-              },
-              body: JSON.stringify(postData),
-            })
+            fetch(
+              "https://social-book-server-tareksolaiman.vercel.app/makePost",
+              {
+                method: "POST",
+                headers: {
+                  "content-type": "application/json",
+                },
+                body: JSON.stringify(postData),
+              }
+            )
               .then((res) => res.json())
               .then((data) => {
                 console.log(data);

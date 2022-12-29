@@ -11,7 +11,7 @@ const EditModal = ({ setOpen, userData, refetch }) => {
   const editAbout = (data) => {
     console.log(data);
     const name = data.name;
-    fetch(`https://social-book-server-five.vercel.app/user/${_id}`, {
+    fetch(`https://social-book-server-tareksolaiman.vercel.app/user/${_id}`, {
       method: "PATCH",
       headers: {
         "content-type": "application/json",

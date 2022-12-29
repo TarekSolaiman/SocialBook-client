@@ -42,13 +42,16 @@ const SigninPage = () => {
           signUp(email, password)
             .then((data) => {
               nameUpdate(name, imgdata.data.url);
-              fetch(`https://social-book-server-five.vercel.app/user`, {
-                method: "POST",
-                headers: {
-                  "content-type": "application/json",
-                },
-                body: JSON.stringify(userData),
-              })
+              fetch(
+                `https://social-book-server-tareksolaiman.vercel.app/user`,
+                {
+                  method: "POST",
+                  headers: {
+                    "content-type": "application/json",
+                  },
+                  body: JSON.stringify(userData),
+                }
+              )
                 .then((res) => res.json())
                 .then((data) => console.log(data));
 

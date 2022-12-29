@@ -21,7 +21,7 @@ const DetailPost = () => {
     queryKey: "myPayments",
     queryFn: async () => {
       const res = await fetch(
-        `https://social-book-server-five.vercel.app/onepost/${id}`
+        `https://social-book-server-tareksolaiman.vercel.app/onepost/${id}`
       );
       const data = await res.json();
       return data;
@@ -34,7 +34,7 @@ const DetailPost = () => {
     const likeNo = parseInt(like) + 1;
     // console.log(likeNo);
     fetch(
-      `https://social-book-server-five.vercel.app/onepost/${id}?likeNo=${likeNo}`,
+      `https://social-book-server-tareksolaiman.vercel.app/onepost/${id}?likeNo=${likeNo}`,
       {
         method: "PATCH",
         headers: {
@@ -54,7 +54,9 @@ const DetailPost = () => {
 
   // Read all comment
   useEffect(() => {
-    fetch(`https://social-book-server-five.vercel.app/allComment/${id}`)
+    fetch(
+      `https://social-book-server-tareksolaiman.vercel.app/allComment/${id}`
+    )
       .then((res) => res.json())
       .then((data) => setComment(data));
   }, [id, commentread]);
@@ -67,7 +69,7 @@ const DetailPost = () => {
       userPhoto: user.photoURL,
       userName: user.displayName,
     };
-    fetch(`https://social-book-server-five.vercel.app/makeComment`, {
+    fetch(`https://social-book-server-tareksolaiman.vercel.app/makeComment`, {
       method: "POST",
       headers: {
         "content-type": "application/json",

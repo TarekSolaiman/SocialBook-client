@@ -16,7 +16,7 @@ const About = () => {
     queryKey: "myPayments",
     queryFn: async () => {
       const res = await fetch(
-        `https://social-book-server-five.vercel.app/user/${user?.email}`
+        `https://social-book-server-tareksolaiman.vercel.app/user/${user?.email}`
       );
       const data = await res.json();
       setOpen(true);

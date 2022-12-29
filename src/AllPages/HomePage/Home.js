@@ -12,7 +12,7 @@ const Home = () => {
     queryKey: "allpost",
     queryFn: async () => {
       const res = await fetch(
-        "https://social-book-server-five.vercel.app/allpost"
+        "https://social-book-server-tareksolaiman.vercel.app/allpost"
       );
       const data = await res.json();
       return data;
