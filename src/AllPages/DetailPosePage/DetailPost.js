@@ -1,12 +1,14 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import { useQuery } from "@tanstack/react-query";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
+import { AuthContext } from "../../context/AuthProvider";
 import Allcomment from "./Allcomment";
 
 const DetailPost = () => {
+  const { user } = useContext(AuthContext);
   const [comment, setComment] = useState([]);
   const [commentread, setCommentread] = useState(true);
   const { id } = useParams();
@@ -18,7 +20,9 @@ const DetailPost = () => {
   } = useQuery({
     queryKey: "myPayments",
     queryFn: async () => {
-      const res = await fetch(`http://localhost:5000/onepost/${id}`);
+      const res = await fetch(
+        `https://social-book-server-five.vercel.app/onepost/${id}`
+      );
       const data = await res.json();
       return data;
     },
@@ -29,12 +33,15 @@ const DetailPost = () => {
   const likeHandle = (id) => {
     const likeNo = parseInt(like) + 1;
     // console.log(likeNo);
-    fetch(`http://localhost:5000/onepost/${id}?likeNo=${likeNo}`, {
-      method: "PATCH",
-      headers: {
-        "content-type": "application/json",
-      },
-    })
+    fetch(
+      `https://social-book-server-five.vercel.app/onepost/${id}?likeNo=${likeNo}`,
+      {
+        method: "PATCH",
+        headers: {
+          "content-type": "application/json",
+        },
+      }
+    )
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
@@ -47,7 +54,7 @@ const DetailPost = () => {
 
   // Read all comment
   useEffect(() => {
-    fetch(`http://localhost:5000/allComment/${id}`)
+    fetch(`https://social-book-server-five.vercel.app/allComment/${id}`)
       .then((res) => res.json())
       .then((data) => setComment(data));
   }, [id, commentread]);
@@ -57,10 +64,10 @@ const DetailPost = () => {
     const commentData = {
       comment: data.comment,
       postId: _id,
-      userPhoto,
-      userName,
+      userPhoto: user.photoURL,
+      userName: user.displayName,
     };
-    fetch(`http://localhost:5000/makeComment`, {
+    fetch(`https://social-book-server-five.vercel.app/makeComment`, {
       method: "POST",
       headers: {
         "content-type": "application/json",

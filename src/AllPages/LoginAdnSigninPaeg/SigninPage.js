@@ -42,7 +42,7 @@ const SigninPage = () => {
           signUp(email, password)
             .then((data) => {
               nameUpdate(name, imgdata.data.url);
-              fetch(`http://localhost:5000/user`, {
+              fetch(`https://social-book-server-five.vercel.app/user`, {
                 method: "POST",
                 headers: {
                   "content-type": "application/json",

@@ -33,7 +33,7 @@ const Navber = () => {
     </>
   );
   return (
-    <div className="navbar bg-gray-900 sticky top-0">
+    <div className="navbar bg-gray-900 sticky top-0 text-gray-400">
       <div className="navbar-start">
         <div className="hidden lg:block">
           <ul className="menu menu-horizontal px-1">{navLink}</ul>

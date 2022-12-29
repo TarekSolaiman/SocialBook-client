@@ -11,7 +11,9 @@ const Home = () => {
   } = useQuery({
     queryKey: "allpost",
     queryFn: async () => {
-      const res = await fetch("http://localhost:5000/allpost");
+      const res = await fetch(
+        "https://social-book-server-five.vercel.app/allpost"
+      );
       const data = await res.json();
       return data;
     },

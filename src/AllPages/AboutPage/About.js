@@ -1,11 +1,12 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import { useQuery } from "@tanstack/react-query";
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { AuthContext } from "../../context/AuthProvider";
 import EditModal from "./EditModal";
 
 const About = () => {
   const { user } = useContext(AuthContext);
+  const [open, setOpen] = useState(true);
 
   const {
     data: userData = [],
@@ -14,12 +15,15 @@ const About = () => {
   } = useQuery({
     queryKey: "myPayments",
     queryFn: async () => {
-      const res = await fetch(`http://localhost:5000/user/${user?.email}`);
+      const res = await fetch(
+        `https://social-book-server-five.vercel.app/user/${user?.email}`
+      );
       const data = await res.json();
+      setOpen(true);
       return data;
     },
   });
-  console.log(userData);
+  // console.log(userData);
   return (
     <div>
       <div className="flex flex-col mx-auto my-10 justify-center max-w-xs p-6 shadow-md rounded-xl sm:px-12 dark:bg-gray-900 dark:text-gray-100">
@@ -64,7 +68,13 @@ const About = () => {
                 <span>EDIT</span>
               </button>
             </a>
-            <EditModal />
+            {open && (
+              <EditModal
+                setOpen={setOpen}
+                userData={userData}
+                refetch={refetch}
+              />
+            )}
           </div>
         </div>
       </div>
