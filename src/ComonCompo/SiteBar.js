@@ -1,9 +1,13 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useContext } from "react";
+import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import { AuthContext } from "../context/AuthProvider";
+import avatar from "../logofolders/avatarImg.png";
 
 const SiteBar = () => {
+  const { user } = useContext(AuthContext);
+  console.log(user);
   const { logOut } = useContext(AuthContext);
   const logOutNow = () => {
     logOut();
@@ -15,20 +19,21 @@ const SiteBar = () => {
     <div className="h-full p-3 space-y-2 w-60 bg-gray-900 text-gray-100 hidden lg:block">
       <div className="flex items-center p-2 space-x-4">
         <img
-          src="https://source.unsplash.com/100x100/?portrait"
+          src={user ? user.photoURL : avatar}
           alt=""
           className="w-12 h-12 rounded-full bg-gray-500"
         />
         <div>
-          <h2 className="text-lg font-semibold">Leroy Jenkins</h2>
+          <h2 className="text-lg font-semibold">
+            {user ? user.displayName : "Please Login"}
+          </h2>
           <span className="flex items-center space-x-1">
-            <a
-              rel="noopener noreferrer"
-              href="#"
+            <Link
+              to={`/about`}
               className="text-xs hover:underline text-gray-400"
             >
               View profile
-            </a>
+            </Link>
           </span>
         </div>
       </div>

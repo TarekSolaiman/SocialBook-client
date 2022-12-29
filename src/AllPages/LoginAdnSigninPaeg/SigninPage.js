@@ -1,12 +1,12 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useContext } from "react";
 import { useForm } from "react-hook-form";
-import { useLocation, useNavigate } from "react-router-dom";
+import { json, useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { AuthContext } from "../../context/AuthProvider";
 
 const SigninPage = () => {
-  const { signUp, googlLogin, nameUpdate } = useContext(AuthContext);
+  const { signUp, nameUpdate } = useContext(AuthContext);
   const { register, handleSubmit, reset } = useForm();
   const navigate = useNavigate();
   const location = useLocation();
@@ -16,6 +16,8 @@ const SigninPage = () => {
     const email = data.email;
     const name = data.name;
     const photo = data.photo;
+    const address = data.address;
+    const university = data.university;
     const password = data.password;
     console.log(data, photo[0]);
 
@@ -30,9 +32,26 @@ const SigninPage = () => {
       .then((imgdata) => {
         if (imgdata.success) {
           console.log(imgdata.data.url);
+          const userData = {
+            email,
+            name,
+            address,
+            photo: imgdata.data.url,
+            university,
+          };
           signUp(email, password)
             .then((data) => {
               nameUpdate(name, imgdata.data.url);
+              fetch(`http://localhost:5000/user`, {
+                method: "POST",
+                headers: {
+                  "content-type": "application/json",
+                },
+                body: JSON.stringify(userData),
+              })
+                .then((res) => res.json())
+                .then((data) => console.log(data));
+
               toast.success("Successful login", {
                 autoClose: 500,
               });
@@ -80,6 +99,24 @@ const SigninPage = () => {
             name="university"
             id="university"
             placeholder="University"
+            required
+            className="input input-bordered input-success w-full"
+          />
+        </div>
+
+        <div className="space-y-1 text-sm">
+          <label
+            htmlFor="addressuniversity"
+            className="block dark:text-gray-400"
+          >
+            Your Address
+          </label>
+          <input
+            {...register("address")}
+            type="address"
+            name="address"
+            id="address"
+            placeholder="Address"
             required
             className="input input-bordered input-success w-full"
           />
